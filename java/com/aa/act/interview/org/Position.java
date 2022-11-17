@@ -1,5 +1,6 @@
 package com.aa.act.interview.org;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -11,6 +12,7 @@ public class Position {
 	private String title;
 	private Optional<Employee> employee;
 	private Set<Position> directReports;
+	private ArrayList<Employee> emp = new ArrayList<>();
 	
 	public Position(String title) {
 		this.title = title;
@@ -23,7 +25,7 @@ public class Position {
 		if(employee != null)
 			setEmployee(Optional.of(employee));
 	}
-	
+
 	public String getTitle() {
 		return title;
 	}
@@ -45,15 +47,22 @@ public class Position {
 			throw new IllegalArgumentException("position cannot be null");
 		return directReports.add(position);
 	}
-	
+	public boolean addEmployee(Employee employ){
+		if(employ == null){
+			throw new IllegalArgumentException("position cannot be null");
+		}
+		return emp.add(employ);
+	}
 	public boolean removePosition(Position position) {
 		return directReports.remove(position);
 	}
-	
+	public ArrayList<Employee> getAllEmployees(){
+		return emp;
+	}
 	public Collection<Position> getDirectReports() {
 		return Collections.unmodifiableCollection(directReports);
 	}
-
+	
 	@Override
 	public String toString() {
 		return title + employee.map(e -> ": " + e.toString()).orElse("");
